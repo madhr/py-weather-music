@@ -3,10 +3,10 @@ from arpeggiator import Arpeggiator
 from mido import Message, MidiTrack
 
 
-class TrackBuilder:
+class MelodyBuilder:
 
 
-	def add_random_scale(self, outfile, program_value, channel, scale, time_limit):
+	def random(self, outfile, program_value, channel, scale, time_limit):
 		track = MidiTrack()
 		outfile.tracks.append(track)
 		track.name = 'random_scale'
@@ -20,7 +20,7 @@ class TrackBuilder:
 			track.append(Message('note_off', note=note, channel=channel, velocity=60, time=time))
 		return outfile
 
-	def add_arpeggiator(self, outfile, program_value, channel, pattern, scale, time_limit):
+	def arpeggiator(self, outfile, program_value, channel, pattern, scale, time_limit):
 		track1 = MidiTrack()
 		outfile.tracks.append(track1)
 		track1.name = "arp"

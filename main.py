@@ -4,7 +4,7 @@ import instruments
 import weather_api
 from arpeggiator import ArpPattern
 from chords import Chords
-from track_builder import TrackBuilder
+from melody_builder import MelodyBuilder
 
 if __name__ == '__main__':
 
@@ -23,13 +23,13 @@ if __name__ == '__main__':
 	# create and save midi file
 
 	outfile = MidiFile()
-	track_builder = TrackBuilder()
+	melody_builder = MelodyBuilder()
 	chords = Chords()
 
 	SONG_LENGTH = 100000
 	base_note = 60
 
-	outfile = track_builder.add_random_scale(
+	outfile = melody_builder.random(
 		outfile=outfile,
 		program_value=instruments.Instruments.Celesta.value,
 		channel=0,
@@ -37,7 +37,7 @@ if __name__ == '__main__':
 		time_limit=SONG_LENGTH
 	)
 
-	outfile = track_builder.add_arpeggiator(
+	outfile = melody_builder.arpeggiator(
 		outfile=outfile,
 		program_value=instruments.Instruments.Piccolo.value,
 		channel=1,
