@@ -1,4 +1,5 @@
-from enum import Enum, auto
+from arp_pattern import ArpPattern
+
 
 class Arpeggiator:
 
@@ -20,9 +21,4 @@ class Arpeggiator:
 
     def __up_and_down(self, list_of_notes):
         return self.up(list_of_notes) + self.down(list_of_notes[1:-1])
-
-class ArpPattern(Enum):
-    UP = auto()
-    DOWN = auto()
-    UP_AND_DOWN = auto()
 
