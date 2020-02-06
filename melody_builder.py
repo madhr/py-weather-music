@@ -1,6 +1,7 @@
 import random
 from arpeggiator import Arpeggiator
 from mido import Message, MidiTrack
+from util.chords import Chords
 
 
 class MelodyBuilder:
@@ -21,10 +22,10 @@ class MelodyBuilder:
 		return outfile
 
 	def arpeggiator(self, outfile, program_value, channel, pattern, scale, time_limit):
-		track1 = MidiTrack()
-		outfile.tracks.append(track1)
-		track1.name = "arp"
-		track1.append(Message('program_change', channel=channel, program=program_value, time=0))
+		track = MidiTrack()
+		outfile.tracks.append(track)
+		track.name = "arp"
+		track.append(Message('program_change', channel=channel, program=program_value, time=0))
 		arpeggiator = Arpeggiator()
 		arp_up_and_down = arpeggiator.create(pattern, scale)
 		count = 0
@@ -37,6 +38,26 @@ class MelodyBuilder:
 			count = count + 1
 			time = 150
 			sum += time
-			track1.append(Message('note_on', note=note, channel=channel, velocity=60, time=time))
-			track1.append(Message('note_off', note=note, channel=channel, velocity=60, time=time))
+			track.append(Message('note_on', note=note, channel=channel, velocity=60, time=time))
+			track.append(Message('note_off', note=note, channel=channel, velocity=60, time=time))
+		return outfile
+
+	def chords(self, outfile, program_value, channel, base_note, time_limit):
+		track = MidiTrack()
+		outfile.tracks.append(track)
+		track.name = "chords"
+		track.append(Message('program_change', channel=channel, program=program_value, time=0))
+		chords = Chords()
+		chord = chords.minor_seventh(base_note)
+		sum = 0
+		while sum < time_limit:
+			time = 300
+			sum += time
+			for note in chord:
+				note_time = time if note == base_note else 0
+				track.append(Message('note_on', note=note, channel=channel, velocity=60, time=note_time))
+			for note in chord:
+				note_time = time if note == base_note else 0
+				track.append(Message('note_off', note=note, channel=channel, velocity=60, time=note_time))
+
 		return outfile
