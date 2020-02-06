@@ -10,12 +10,16 @@ if __name__ == '__main__':
 
 	# get weather from api and parse it
 
-	API_KEY = 'test'
+	API_KEY = '7f1f66212a27b1173d1c96f3f644b3a5'
 	city = 'Wroclaw,pl'
 
 	api_handling = weather_api.WeatherApi()
 
 	json_weather_forecast = api_handling.get_json_weather_forecast_from_api(city, API_KEY)
+
+	if json_weather_forecast is None:
+		raise Exception("Failed to pull weather forecast")
+
 	weather_forecast = api_handling.parse_weather_forecast(json_weather_forecast)
 
 	print("Weather forecast successfully parsed")
@@ -43,6 +47,14 @@ if __name__ == '__main__':
 		channel=1,
 		pattern=ArpPattern.UP,
 		scale=chords.minor_triad(base_note),
+		time_limit=SONG_LENGTH
+	)
+
+	outfile = melody_builder.chords(
+		outfile=outfile,
+		program_value=instruments.Instruments.Piccolo.value,
+		channel=2,
+		base_note=base_note-12,
 		time_limit=SONG_LENGTH
 	)
 
