@@ -8,10 +8,10 @@ class Chords:
 
 	def minor_seventh(self, note):
 		chord = self.minor_triad(note)
-		chord.append(note + 11)
+		chord.append(note + 10)
 		return chord
 
 	def major_seventh(self, note):
 		chord = self.major_triad(note)
-		chord.append(note + 11)
+		chord.append(note + 10)
 		return chord
