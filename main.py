@@ -1,5 +1,7 @@
 from mido import MidiFile
 from pathlib import Path
+
+from transposer import Transposer
 from util import instruments
 import weather_api
 from arpeggiator import ArpPattern
@@ -27,35 +29,34 @@ if __name__ == '__main__':
 	# create and save midi file
 
 	outfile = MidiFile()
-	melody_builder = MelodyBuilder()
-	chords = Chords()
-
 	SONG_LENGTH = 100000
+
+	melody_builder = MelodyBuilder(outfile, SONG_LENGTH)
+	chords = Chords()
+	transposer = Transposer()
 	base_note = 60
 
+	lower_note = transposer.octave_down(base_note)
+	minor_chord = chords.minor_seventh(base_note)
+	lower_minor_chord = transposer.octave_down_list(minor_chord)
+
 	outfile = melody_builder.random(
-		outfile=outfile,
 		program_value=instruments.Instruments.Celesta.value,
 		channel=0,
-		scale=chords.minor_seventh(base_note),
-		time_limit=SONG_LENGTH
+		scale=chords.minor_seventh(base_note)
 	)
 
 	outfile = melody_builder.arpeggiator(
-		outfile=outfile,
 		program_value=instruments.Instruments.Piccolo.value,
 		channel=1,
 		pattern=ArpPattern.UP,
-		scale=chords.minor_triad(base_note),
-		time_limit=SONG_LENGTH
+		scale=transposer.octave_up_list(chords.minor_triad(base_note))
 	)
 
 	outfile = melody_builder.chords(
-		outfile=outfile,
 		program_value=instruments.Instruments.Piccolo.value,
 		channel=2,
-		base_note=base_note-12,
-		time_limit=SONG_LENGTH
+		base_note=lower_note
 	)
 
 	file_dir = 'midi_out'
