@@ -1,9 +1,9 @@
 from mido import MidiFile
 from pathlib import Path
-import instruments
+from util import instruments
 import weather_api
 from arpeggiator import ArpPattern
-from chords import Chords
+from util.chords import Chords
 from melody_builder import MelodyBuilder
 
 if __name__ == '__main__':
