@@ -8,7 +8,6 @@ class Converter:
 
 	def list_of_notes_to_length(self, list_of_notes: list, length: int) -> list:
 		if len(list_of_notes) > length:
-			print(list_of_notes[0:length])
 			return list_of_notes[0:length]
 		else:
 			transposer = Transposer()

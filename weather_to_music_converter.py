@@ -67,7 +67,7 @@ class WeatherToMusicConverter:
 	def save_file(self, outfile: MidiFile, file_dir: str, file_name: str) -> MidiFile:
 		Path(file_dir).mkdir(exist_ok=True)
 		outfile.save(file_dir + '/' + file_name + '.mid')
-		print("file saved at " + file_dir + '/' + file_name)
+		print("file saved at " + file_dir + '/' + file_name + '.mid')
 		return outfile
 
 	def get_midi_track_time(self, midi_track: MidiTrack):
@@ -81,7 +81,6 @@ class WeatherToMusicConverter:
 		chords = Chords()
 		melody_builder = MelodyBuilder(outfile, self.PHRASE_LENGTH)
 		amplitude = temperature.temp_max - temperature.temp_min
-		print(amplitude)
 		notes_for_arp = conv.amplitude_to_arp_notes(amplitude, chords.minor_seventh(base_note))
 
 		outfile = melody_builder.arpeggiator(
