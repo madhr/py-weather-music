@@ -3,7 +3,7 @@ from arp_pattern import ArpPattern
 
 class Arpeggiator:
 
-    def create(self, pattern, list_of_notes):
+    def create(self, pattern: ArpPattern, list_of_notes: list) -> list:
         if pattern == ArpPattern.UP:
             return self.__up(list_of_notes)
         elif pattern == ArpPattern.DOWN:
@@ -13,12 +13,12 @@ class Arpeggiator:
         else:
             raise Exception("Invalid ArpPattern enum")
 
-    def __up(self, list_of_notes):
+    def __up(self, list_of_notes: list) -> list:
         return list_of_notes
 
-    def __down(self, list_of_notes):
+    def __down(self, list_of_notes: list) -> list:
         return list(reversed(list_of_notes))
 
-    def __up_and_down(self, list_of_notes):
-        return self.up(list_of_notes) + self.down(list_of_notes[1:-1])
+    def __up_and_down(self, list_of_notes: list) -> list:
+        return self.__up(list_of_notes) + self.__down(list_of_notes[1:-1])
 
