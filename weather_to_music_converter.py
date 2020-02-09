@@ -81,10 +81,11 @@ class WeatherToMusicConverter:
 		chords = Chords()
 		melody_builder = MelodyBuilder(outfile, self.PHRASE_LENGTH)
 		amplitude = temperature.temp_max - temperature.temp_min
+		print(amplitude)
 		notes_for_arp = conv.amplitude_to_arp_notes(amplitude, chords.minor_seventh(base_note))
 
 		outfile = melody_builder.arpeggiator(
-			program_value=Instruments.Piccolo,
+			program_value=Instruments.BrightAcousticPiano,
 			channel=1,
 			pattern=ArpPattern.UP_AND_DOWN,
 			track=temperature_track,
@@ -101,7 +102,7 @@ class WeatherToMusicConverter:
 		music_scales = MusicScales()
 		melodic_minor = music_scales.melodic_minor(base_note)
 		scale = conv.rain_to_scale_size(rain, melodic_minor)
-		scale = transposer.octave_down_list(scale)
+		scale = transposer.octave_up_list(scale)
 		outfile = melody_builder.random(
 			program_value=Instruments.Celesta,
 			channel=2,
@@ -116,12 +117,13 @@ class WeatherToMusicConverter:
 		conv = Converter()
 		melody_builder = MelodyBuilder(outfile, self.PHRASE_LENGTH)
 		chords = Chords()
+		transposer = Transposer()
 
 		length = conv.clouds_to_chord_length(clouds)
 		outfile = melody_builder.chord(
-			program_value=Instruments.Contrabass,
+			program_value=Instruments.TremoloStrings,
 			channel=3,
-			chord=chords.minor_seventh(base_note),
+			chord=transposer.octave_down_list(chords.minor_seventh(base_note)),
 			track=clouds_track,
 			time_factor=length
 		)
@@ -130,8 +132,35 @@ class WeatherToMusicConverter:
 
 	def append_humidity(self, outfile: MidiFile, humidity_track: MidiTrack, base_note: int, humidity: float) -> MidiFile:
 
+		conv = Converter()
+		transposer = Transposer()
+		melody_builder = MelodyBuilder(outfile, self.PHRASE_LENGTH)
+		notes_for_arp = [transposer.two_octaves_down(base_note)]
+		velocity = conv.humidity_to_volume(humidity)
+
+		outfile = melody_builder.arpeggiator(
+			program_value=Instruments.ElectricGuitar_muted,
+			channel=4,
+			pattern=ArpPattern.UP_AND_DOWN,
+			track=humidity_track,
+			time_factor=240,
+			scale=notes_for_arp,
+			velocity=velocity
+		)
 		return outfile
 
 	def append_wind(self, outfile: MidiFile, wind_track: MidiTrack, base_note: int, wind: float) -> MidiFile:
 
+		conv = Converter()
+		melody_builder = MelodyBuilder(outfile, self.PHRASE_LENGTH)
+		transposer = Transposer()
+
+		noise_level = conv.wind_to_noise_level(wind)
+		outfile = melody_builder.dynamic(
+			program_value=Instruments.Seashore,
+			channel=5,
+			note=transposer.octave_down(base_note),
+			track=wind_track,
+			velocity=noise_level
+		)
 		return outfile
