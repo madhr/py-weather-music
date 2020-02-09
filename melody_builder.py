@@ -1,8 +1,6 @@
 import random
 from arpeggiator import Arpeggiator
-from mido import Message, MidiTrack, MidiFile
-
-from util.chords import Chords
+from mido import Message, MidiFile
 
 
 class MelodyBuilder:
@@ -14,25 +12,29 @@ class MelodyBuilder:
 		self.outfile = outfile
 		self.time_limit = time_limit
 
-
-	def random(self, program_value, channel, scale):
-		track = MidiTrack()
-		self.outfile.tracks.append(track)
-		track.name = 'random_scale'
+	def random(self, program_value, channel, scale, track, time_factor = 60):
 		track.append(Message('program_change', channel=channel, program=program_value, time=0))
 		sum = 0
-		while sum < self.time_limit:
+		while sum < self.time_limit and not scale is None:
 			note = random.choice(scale)
-			time = random.randrange(120, 600, 60)
-			sum += time
+			time = abs(random.randrange(2*time_factor, 8*time_factor, time_factor))
+
+			if (sum + time >= self.time_limit):
+				time = self.time_limit - sum
+				sum = self.time_limit
+			else:
+				sum += time
 			track.append(Message('note_on', note=note, channel=channel, velocity=60, time=time))
 			track.append(Message('note_off', note=note, channel=channel, velocity=60, time=time))
+
+		# fill with empty
+		remaining_time = int(self.time_limit - sum)
+		track.append(Message('note_on', note=0, channel=channel, velocity=0, time=remaining_time))
+		track.append(Message('note_off', note=0, channel=channel, velocity=0, time=remaining_time))
+
 		return self.outfile
 
-	def arpeggiator(self, program_value, channel, pattern, scale):
-		track = MidiTrack()
-		self.outfile.tracks.append(track)
-		track.name = "arp"
+	def arpeggiator(self, program_value, channel, pattern, track, time_factor, scale):
 		track.append(Message('program_change', channel=channel, program=program_value, time=0))
 		arpeggiator = Arpeggiator()
 		arp_up_and_down = arpeggiator.create(pattern, scale)
@@ -44,28 +46,27 @@ class MelodyBuilder:
 				count = 0
 			note = arp_up_and_down[count]
 			count = count + 1
-			time = 150
-			sum += time
-			track.append(Message('note_on', note=note, channel=channel, velocity=60, time=time))
-			track.append(Message('note_off', note=note, channel=channel, velocity=60, time=time))
+			sum += time_factor
+			track.append(Message('note_on', note=note, channel=channel, velocity=60, time=time_factor))
+			track.append(Message('note_off', note=note, channel=channel, velocity=60, time=time_factor))
 		return self.outfile
 
-	def chords(self, program_value, channel, base_note):
-		track = MidiTrack()
-		self.outfile.tracks.append(track)
-		track.name = "chords"
+	def chord(self, program_value, channel, chord, track, time_factor = 60):
 		track.append(Message('program_change', channel=channel, program=program_value, time=0))
-		chords = Chords()
-		chord = chords.minor_seventh(base_note)
-		sum = 0
-		while sum < self.time_limit:
-			time = 300
-			sum += time
-			for note in chord:
-				note_time = time if note == base_note else 0
-				track.append(Message('note_on', note=note, channel=channel, velocity=60, time=note_time))
-			for note in chord:
-				note_time = time if note == base_note else 0
-				track.append(Message('note_off', note=note, channel=channel, velocity=60, time=note_time))
+
+		sum_of_times = 0
+
+		for note in chord:
+			note_time = time_factor if note == chord[0] else 0
+			sum_of_times += note_time
+			track.append(Message('note_on', note=note, channel=channel, velocity=60, time=note_time))
+		for note in chord:
+			note_time = time_factor if note == chord[0] else 0
+			sum_of_times += note_time
+			track.append(Message('note_off', note=note, channel=channel, velocity=60, time=note_time))
+
+		remaining_time = int(self.time_limit - sum_of_times / 2)
+		track.append(Message('note_on', note=0, channel=channel, velocity=0, time=remaining_time))
+		track.append(Message('note_off', note=0, channel=channel, velocity=0, time=remaining_time))
 
 		return self.outfile
