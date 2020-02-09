@@ -1,23 +1,28 @@
 import math
 from arp_pattern import ArpPattern
 from arpeggiator import Arpeggiator
+from transposer import Transposer
 
 
 class Converter:
 
+	def list_of_notes_to_length(self, list_of_notes: list, length: int) -> list:
+		if len(list_of_notes) > length:
+			print(list_of_notes[0:length])
+			return list_of_notes[0:length]
+		else:
+			transposer = Transposer()
+			new_list = list_of_notes + transposer.octave_up_list(list_of_notes)
+			return self.list_of_notes_to_length(new_list, length)
+
 	def amplitude_to_arp_notes(self, amplitude: int, list_of_notes: list) -> list:
 		arpeggiator = Arpeggiator()
-		if 0 <= amplitude < 3:
-			return arpeggiator.create(ArpPattern.UP_AND_DOWN, list_of_notes)
-		elif 3 <= amplitude < 6:
-			return arpeggiator.create(ArpPattern.UP_2_OCTAVES, list_of_notes)
-		elif 6 <= amplitude < 15:
-			return arpeggiator.create(ArpPattern.DOWN_2_OCTAVES, list_of_notes)
-		elif 15 <= amplitude:
-			return arpeggiator.create(ArpPattern.UP_AND_DOWN_2_OCTAVES, list_of_notes)
+		normalized_amplitude = int(amplitude + 1) * 4
+		amplitude_based_notes = self.list_of_notes_to_length(list_of_notes, normalized_amplitude)
+		return arpeggiator.create(ArpPattern.UP_AND_DOWN, amplitude_based_notes)
 
 	def temperature_to_base_note(self, feels_like: float) -> int:
-		return int(feels_like / 4.2)
+		return int(feels_like / 4.2) - 6
 
 	def rain_to_scale_size(self, rain: float, scale: list) -> list:
 		if len(scale) < 1:
@@ -35,3 +40,9 @@ class Converter:
 
 	def clouds_to_chord_length(self, clouds: int) -> int:
 		return int(clouds * 12)
+
+	def humidity_to_volume(self, humidity: int):
+		return int(humidity * 1.27)
+
+	def wind_to_noise_level(self, wind: float) -> int:
+		return int(wind*5) if wind < 25 else 127
