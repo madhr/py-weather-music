@@ -31,10 +31,10 @@ class WeatherApi:
 
 			pressure = Pressure(sea_level, grnd_level)
 
-			humidity = list_item.get('main').get('humidity')
-			clouds = list_item.get('clouds').get('all')
-			wind_speed = list_item.get('wind').get('speed')
-			rain = list_item.get('rain', {}).get('3h', None)
+			humidity = list_item.get('main').get('humidity', 0)
+			clouds = list_item.get('clouds').get('all', 0)
+			wind_speed = list_item.get('wind').get('speed', 0)
+			rain = list_item.get('rain', {}).get('3h', 0)
 
 			weather = Weather(humidity, clouds, wind_speed, rain)
 
@@ -51,7 +51,5 @@ class WeatherApi:
 		sunset = json_data.get('city').get('sunset')
 
 		weather_forecast = WeatherForecast(city, country, population, sunrise, sunset, weather_timestamps)
-
-		print(weather_forecast)
 
 		return weather_forecast
