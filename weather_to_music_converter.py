@@ -24,6 +24,7 @@ class WeatherToMusicConverter:
 
 	TICKS_PER_BEAT = 400
 	PHRASE_LENGTH = 1200
+	OUTPUT_FILE_DIR = 'midi_out'
 	converter = Converter()
 	chords = Chords()
 	transposer = Transposer()
@@ -51,8 +52,8 @@ class WeatherToMusicConverter:
 		melody_builder = MelodyBuilder(outfile, self.PHRASE_LENGTH)
 
 		for entry in weather_forecast.weather_timestamps:
-			base_note = self.converter.temperature_to_base_note(entry.temperature.feels_like)
 
+			base_note = self.converter.temperature_to_base_note(entry.temperature.feels_like)
 			music_scale = self.music_scales.melodic_minor(base_note)
 
 			temperature_sequence = TemperatureSequence(entry.temperature, self.PHRASE_LENGTH, base_note, temperature_track)
@@ -75,15 +76,11 @@ class WeatherToMusicConverter:
 			wind_appender = WindAppender()
 			wind_appender.append(melody_builder, wind_sequence)
 
-		outfile.tracks.append(temperature_track)
-		outfile.tracks.append(rain_track)
-		outfile.tracks.append(clouds_track)
-		outfile.tracks.append(humidity_track)
-		outfile.tracks.append(wind_track)
+		for track in [temperature_track, rain_track, clouds_track, humidity_track, wind_track]:
+			outfile.tracks.append(track)
 
-		file_dir = 'midi_out'
-		file_name = 'song-for-' + city + str(weather_forecast.sunrise)
-		self.save_file(outfile, file_dir, file_name)
+		file_name = 'weather_song_' + weather_forecast.city + '_' + weather_forecast.country + '_' + str(weather_forecast.weather_timestamps[0].timestamp)
+		self.save_file(outfile, self.OUTPUT_FILE_DIR, file_name)
 
 	def save_file(self, outfile: MidiFile, file_dir: str, file_name: str) -> MidiFile:
 		Path(file_dir).mkdir(exist_ok=True)
