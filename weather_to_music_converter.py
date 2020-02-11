@@ -7,17 +7,17 @@ from appenders.clouds_appender import CloudsAppender
 from appenders.humidity_appender import HumidityAppender
 from appenders.rain_appender import RainAppender
 from appenders.temperature_appender import TemperatureAppender
-from converters import Converter
+from util.converters import Converter
 from melody_builder import MelodyBuilder
 from sequences.wind_sequence import WindSequence
 from sequences.clouds_sequence import CloudsSequence
 from sequences.humidity_sequence import HumiditySequence
 from sequences.rain_sequence import RainSequence
 from sequences.temperature_sequence import TemperatureSequence
-from transposer import Transposer
+from util.transposer import Transposer
 from util.chords import Chords
 from util.music_scale import MusicScale
-from weather_api import WeatherApi
+from weather_api.weather_api import WeatherApi
 
 
 class WeatherToMusicConverter:

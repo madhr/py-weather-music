@@ -1,11 +1,11 @@
 from mido import MidiFile
 
 from appenders.appender_interface import AppenderInterface
-from arp_pattern import ArpPattern
-from converters import Converter
+from util.arp_pattern import ArpPattern
+from util.converters import Converter
 from melody_builder import MelodyBuilder
 from sequences.humidity_sequence import HumiditySequence
-from transposer import Transposer
+from util.transposer import Transposer
 from util.instruments import Instruments
 
 

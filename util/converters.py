@@ -1,7 +1,7 @@
 import math
-from arp_pattern import ArpPattern
-from arpeggiator import Arpeggiator
-from transposer import Transposer
+from util.arp_pattern import ArpPattern
+from util.arpeggiator import Arpeggiator
+from util.transposer import Transposer
 
 
 class Converter:

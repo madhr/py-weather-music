@@ -1,6 +1,6 @@
 import requests
 
-from weather_forecast import WeatherTimestamp, Temperature, Pressure, Weather, WeatherForecast
+from weather_api.weather_forecast import WeatherTimestamp, Temperature, Pressure, Weather, WeatherForecast
 
 
 class WeatherApi:

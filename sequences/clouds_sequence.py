@@ -1,8 +1,8 @@
 from mido import MidiTrack
 
-from converters import Converter
+from util.converters import Converter
 from sequences.sequence import Sequence
-from transposer import Transposer
+from util.transposer import Transposer
 from util.chords import Chords
 
 

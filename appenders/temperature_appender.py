@@ -1,11 +1,9 @@
 from mido import MidiFile
 
 from appenders.appender_interface import AppenderInterface
-from arp_pattern import ArpPattern
-from converters import Converter
+from util.arp_pattern import ArpPattern
 from melody_builder import MelodyBuilder
 from sequences.temperature_sequence import TemperatureSequence
-from util.chords import Chords
 from util.instruments import Instruments
 
 

@@ -1,9 +1,9 @@
 from mido import MidiTrack
 
-from converters import Converter
+from util.converters import Converter
 from sequences.sequence import Sequence
 from util.chords import Chords
-from weather_forecast import Temperature
+from weather_api.weather_forecast import Temperature
 
 
 class TemperatureSequence(Sequence):

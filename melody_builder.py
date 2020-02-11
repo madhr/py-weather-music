@@ -1,5 +1,5 @@
 import random
-from arpeggiator import Arpeggiator
+from util.arpeggiator import Arpeggiator
 from mido import Message, MidiFile
 
 
