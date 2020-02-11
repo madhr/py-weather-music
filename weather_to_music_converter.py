@@ -8,7 +8,7 @@ from melody_builder import MelodyBuilder
 from transposer import Transposer
 from util.chords import Chords
 from util.instruments import Instruments
-from util.music_scales import MusicScales
+from util.music_scale import MusicScale
 from weather_api import WeatherApi
 from weather_forecast import Temperature
 
@@ -20,7 +20,7 @@ class WeatherToMusicConverter:
 	converter = Converter()
 	chords = Chords()
 	transposer = Transposer()
-	music_scales = MusicScales()
+	music_scales = MusicScale()
 
 	def weather_to_music(self, api_key, city):
 
