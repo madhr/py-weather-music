@@ -6,28 +6,28 @@ from transposer import Transposer
 
 class Converter:
 
-	HUMIDITY_TO_VOLUME = 1.27
-	WIND_TO_NOISE = 5
+	HUMIDITY_TO_VELOCITY = 1.27
+	WIND_TO_VELOCITY = 5
 	CLOUDS_TO_CHORD_LENGTH = 12
 	TEMPERATURE_TO_BASE_NOTE = 0.238
 	TRANSPOSE_BASE_NOTE = -6
-	MAX_NOISE_VALUE = 127
+	MAX_NOISE_VELOCITY = 127
 	EDGE_WIND_VALUE = 25
 	AMPLITUDE_ADD = 1
 	AMPLITUDE_MULTIPLY = 4
 
-	def list_of_notes_to_length(self, list_of_notes: list, length: int) -> list:
+	def music_notes_to_sequence_length(self, list_of_notes: list, length: int) -> list:
 		if len(list_of_notes) > length:
 			return list_of_notes[0:length]
 		else:
 			transposer = Transposer()
 			new_list = list_of_notes + transposer.octave_up_list(list_of_notes)
-			return self.list_of_notes_to_length(new_list, length)
+			return self.music_notes_to_sequence_length(new_list, length)
 
-	def amplitude_to_arp_notes(self, amplitude: int, list_of_notes: list) -> list:
+	def amplitude_to_arp_pattern(self, amplitude: int, list_of_notes: list) -> list:
 		arpeggiator = Arpeggiator()
 		normalized_amplitude = int(amplitude + self.AMPLITUDE_ADD) * self.AMPLITUDE_MULTIPLY
-		amplitude_based_notes = self.list_of_notes_to_length(list_of_notes, normalized_amplitude)
+		amplitude_based_notes = self.music_notes_to_sequence_length(list_of_notes, normalized_amplitude)
 		return arpeggiator.create(ArpPattern.UP_AND_DOWN, amplitude_based_notes)
 
 	def temperature_to_base_note(self, feels_like: float) -> int:
@@ -51,8 +51,8 @@ class Converter:
 	def clouds_to_chord_length(self, clouds: int) -> int:
 		return int(clouds * self.CLOUDS_TO_CHORD_LENGTH)
 
-	def humidity_to_volume(self, humidity: int):
-		return int(humidity * self.HUMIDITY_TO_VOLUME)
+	def humidity_to_velocity(self, humidity: int):
+		return int(humidity * self.HUMIDITY_TO_VELOCITY)
 
-	def wind_to_noise_level(self, wind: float) -> int:
-		return int(wind*self.WIND_TO_NOISE) if wind < self.EDGE_WIND_VALUE else self.MAX_NOISE_VALUE
+	def wind_to_velocity(self, wind: float) -> int:
+		return int(wind * self.WIND_TO_VELOCITY) if wind < self.EDGE_WIND_VALUE else self.MAX_NOISE_VELOCITY

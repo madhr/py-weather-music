@@ -15,7 +15,7 @@ class HumiditySequence(Sequence):
 		self.__humidity = humidity
 		self.__track = track
 		self.__scale = [self.transposer.two_octaves_down(self.get_base_note())]
-		self.__velocity = self.converter.humidity_to_volume(self.get_humidity())
+		self.__velocity = self.converter.humidity_to_velocity(self.get_humidity())
 
 	def get_humidity(self):
 		return self.__humidity

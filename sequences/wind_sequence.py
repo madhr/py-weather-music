@@ -14,7 +14,7 @@ class WindSequence(Sequence):
 		super().__init__(length, base_note, music_scale)
 		self.__wind_speed = wind_speed
 		self.__track = track
-		self.__noise_level = self.converter.wind_to_noise_level(self.get_wind_speed())
+		self.__noise_level = self.converter.wind_to_velocity(self.get_wind_speed())
 		self.__note = self.transposer.octave_down(self.get_base_note())
 
 	def get_wind_speed(self):

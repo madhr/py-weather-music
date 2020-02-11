@@ -15,7 +15,7 @@ class TemperatureSequence(Sequence):
 		super().__init__(length, base_note, music_scale)
 		self.__temperature = temperature
 		self.__track = track
-		self.__temperture_scale = self.converter.amplitude_to_arp_notes((temperature.temp_max - temperature.temp_min), self.chords.minor_seventh(self.get_base_note()))
+		self.__temperture_scale = self.converter.amplitude_to_arp_pattern((temperature.temp_max - temperature.temp_min), self.chords.minor_seventh(self.get_base_note()))
 
 	def get_temperature(self):
 		return self.__temperature
