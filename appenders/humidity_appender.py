@@ -16,16 +16,13 @@ class HumidityAppender(AppenderInterface):
 
 	def append(self, melody_builder: MelodyBuilder, humidity_sequence: HumiditySequence) -> MidiFile:
 
-		notes_for_arp = [self.transposer.two_octaves_down(humidity_sequence.get_base_note())]
-		velocity = self.converter.humidity_to_volume(humidity_sequence.get_humidity())
-
 		melody_builder.outfile = melody_builder.arpeggiator(
 			program_value=Instruments.ElectricGuitar_muted,
 			channel=4,
 			pattern=ArpPattern.UP_AND_DOWN,
 			track=humidity_sequence.get_track(),
 			time_factor=240,
-			scale=notes_for_arp,
-			velocity=velocity
+			scale=humidity_sequence.get_scale(),
+			velocity=humidity_sequence.get_velocity()
 		)
 		return melody_builder.outfile
