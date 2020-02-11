@@ -5,7 +5,18 @@ from weather_forecast import WeatherTimestamp, Temperature, Pressure, Weather, W
 
 class WeatherApi:
 
-	def get_json_weather_forecast_from_api(self, city, api_key):
+	def get_weather_forecast_from_api(self, city, api_key) -> WeatherForecast:
+
+		json_weather_forecast = self.__get_json_weather_forecast_from_api(city, api_key)
+
+		if json_weather_forecast is None:
+			raise Exception("Failed to pull weather forecast")
+
+		weather_forecast = self.__parse_weather_forecast(json_weather_forecast)
+
+		return weather_forecast
+
+	def __get_json_weather_forecast_from_api(self, city, api_key):
 		response = requests.get("https://api.openweathermap.org/data/2.5/forecast?q="+city+"&APPID=" + api_key)
 
 		if response.status_code == 200:
@@ -13,7 +24,7 @@ class WeatherApi:
 		else:
 			return None
 
-	def parse_weather_forecast(self, json_data):
+	def __parse_weather_forecast(self, json_data):
 		weather_timestamps = []
 
 		for i in range(len(json_data.get('list'))):
