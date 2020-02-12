@@ -1,11 +1,11 @@
 from mido import MidiTrack
 
-from util.arp_pattern import ArpPattern
-from util.chords import Chords
-from util.converters import Converter
-from util.music_scale import MusicScale
-from util.transposer import Transposer
-from weather.weather_forecast import Temperature
+from app.util.arp_pattern import ArpPattern
+from app.util.chords import Chords
+from app.util.converters import Converter
+from app.util.music_scale import MusicScale
+from app.util.transposer import Transposer
+from app.weather.weather_forecast import Temperature
 
 
 class Sequence:

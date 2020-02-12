@@ -1,5 +1,7 @@
-from util.weather_to_music_converter import WeatherToMusicConverter
+
 import argparse
+
+from app.util.weather_to_music_converter import WeatherToMusicConverter
 
 API_KEY = '7f1f66212a27b1173d1c96f3f644b3a5'
 

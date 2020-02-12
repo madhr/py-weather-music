@@ -1,17 +1,15 @@
 from pathlib import Path
-
-from appenders.appenders import *
-from util.melody_builder import MelodyBuilder
-from sequences.sequences import *
-from util.music_scale import MusicScale
-from tracks.tracks import *
-from weather.weather_api import WeatherApi
+from app.appenders.appenders import *
+from app.sequences.sequences import *
+from app.util.instruments import Instruments
+from app.util.music_scale import MusicScale
+from app.weather.weather_api import WeatherApi
 
 
 class WeatherToMusicConverter:
 
 	PHRASE_LENGTH = 1200
-	OUTPUT_FILE_DIR = '../midi_out'
+	OUTPUT_FILE_DIR = '../../midi_out'
 
 	music_scales = MusicScale()
 
@@ -74,7 +72,7 @@ class WeatherToMusicConverter:
 	def save_file(self, outfile: MidiFile, file_dir: str, file_name: str) -> MidiFile:
 		Path(file_dir).mkdir(exist_ok=True)
 		outfile.save(file_dir + '/' + file_name + '.mid')
-		print("file saved at " + file_dir + '/' + file_name + '.mid')
+		print('file saved as' + file_name + '.mid')
 		return outfile
 
 	def get_midi_track_time(self, midi_track: MidiTrack):

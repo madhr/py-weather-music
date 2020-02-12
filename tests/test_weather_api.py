@@ -1,7 +1,6 @@
 from unittest import TestCase
 
-from weather.weather_api import WeatherApi
-from weather.weather_forecast import WeatherForecast
+from app.weather.weather_api import WeatherApi, WeatherForecast
 
 
 class TestWeatherApi(TestCase):

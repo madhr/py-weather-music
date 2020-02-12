@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from mido import MidiTrack, Message, MidiFile
 
-from util.weather_to_music_converter import WeatherToMusicConverter
+from app.util.weather_to_music_converter import WeatherToMusicConverter
 
 
 class TestWeatherToMusicConverter(TestCase):

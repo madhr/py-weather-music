@@ -1,4 +1,4 @@
-from util.arp_pattern import ArpPattern
+from app.util.arp_pattern import ArpPattern
 
 
 class Arpeggiator:

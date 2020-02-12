@@ -1,6 +1,6 @@
 import requests
 
-from weather.weather_forecast import *
+from app.weather.weather_forecast import *
 
 
 class WeatherApi:

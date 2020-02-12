@@ -1,6 +1,6 @@
 from mido import MidiTrack
 
-from util.instruments import Instruments
+from app.util.instruments import Instruments
 
 
 class Track:
