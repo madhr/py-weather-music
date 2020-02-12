@@ -9,11 +9,7 @@ from appenders.rain_appender import RainAppender
 from appenders.temperature_appender import TemperatureAppender
 from util.converters import Converter
 from melody_builder import MelodyBuilder
-from sequences.wind_sequence import WindSequence
-from sequences.clouds_sequence import CloudsSequence
-from sequences.humidity_sequence import HumiditySequence
-from sequences.rain_sequence import RainSequence
-from sequences.temperature_sequence import TemperatureSequence
+from sequences.sequences import WindSequence, CloudsSequence, HumiditySequence, RainSequence, TemperatureSequence
 from util.instruments import Instruments
 from util.music_scale import MusicScale
 from tracks.tracks import TemperatureTrack, CloudsTrack, HumidityTrack, RainTrack, WindTrack

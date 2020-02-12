@@ -2,7 +2,7 @@ from mido import MidiFile
 
 from appenders.appender_interface import AppenderInterface
 from melody_builder import MelodyBuilder
-from sequences.wind_sequence import WindSequence
+from sequences.sequences import WindSequence
 from tracks.tracks import WindTrack
 
 

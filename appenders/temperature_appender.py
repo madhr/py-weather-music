@@ -4,7 +4,7 @@ from appenders.appender_interface import AppenderInterface
 from tracks.tracks import TemperatureTrack
 from util.arp_pattern import ArpPattern
 from melody_builder import MelodyBuilder
-from sequences.temperature_sequence import TemperatureSequence
+from sequences.sequences import TemperatureSequence
 
 
 class TemperatureAppender(AppenderInterface):

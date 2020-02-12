@@ -3,7 +3,7 @@ from abc import ABCMeta, abstractmethod
 from mido import MidiFile
 
 from melody_builder import MelodyBuilder
-from sequences.sequence import Sequence
+from sequences.sequences import Sequence
 from tracks.tracks import Track
 
 

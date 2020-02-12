@@ -5,7 +5,7 @@ from tracks.tracks import HumidityTrack
 from util.arp_pattern import ArpPattern
 from util.converters import Converter
 from melody_builder import MelodyBuilder
-from sequences.humidity_sequence import HumiditySequence
+from sequences.sequences import HumiditySequence
 from util.transposer import Transposer
 
 

@@ -2,7 +2,7 @@ from mido import MidiFile
 
 from appenders.appender_interface import AppenderInterface
 from melody_builder import MelodyBuilder
-from sequences.clouds_sequence import CloudsSequence
+from sequences.sequences import CloudsSequence
 from tracks.tracks import CloudsTrack
 
 
