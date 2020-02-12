@@ -1,12 +1,12 @@
 from mido import MidiFile
 
 from appenders.appender_interface import AppenderInterface
+from tracks.humidity_track import HumidityTrack
 from util.arp_pattern import ArpPattern
 from util.converters import Converter
 from melody_builder import MelodyBuilder
 from sequences.humidity_sequence import HumiditySequence
 from util.transposer import Transposer
-from util.instruments import Instruments
 
 
 class HumidityAppender(AppenderInterface):
@@ -14,11 +14,10 @@ class HumidityAppender(AppenderInterface):
 	transposer = Transposer()
 	converter = Converter()
 
-	def append(self, melody_builder: MelodyBuilder, humidity_sequence: HumiditySequence) -> MidiFile:
+	def append(self, melody_builder: MelodyBuilder, humidity_sequence: HumiditySequence, humidity_track: HumidityTrack) -> MidiFile:
 
 		melody_builder.outfile = melody_builder.arpeggiator(
-			program_value=Instruments.ElectricGuitar_muted,
-			channel=4,
+			channel=humidity_track.get_channel(),
 			pattern=ArpPattern.UP_AND_DOWN,
 			track=humidity_sequence.get_track(),
 			time_factor=240,
