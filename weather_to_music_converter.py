@@ -2,11 +2,7 @@ from pathlib import Path
 
 from mido import MidiFile, MidiTrack
 
-from appenders.wind_appender import WindAppender
-from appenders.clouds_appender import CloudsAppender
-from appenders.humidity_appender import HumidityAppender
-from appenders.rain_appender import RainAppender
-from appenders.temperature_appender import TemperatureAppender
+from appenders.appenders import WindAppender, CloudsAppender, HumidityAppender, RainAppender, TemperatureAppender
 from util.converters import Converter
 from melody_builder import MelodyBuilder
 from sequences.sequences import WindSequence, CloudsSequence, HumiditySequence, RainSequence, TemperatureSequence
