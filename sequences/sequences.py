@@ -5,7 +5,7 @@ from util.chords import Chords
 from util.converters import Converter
 from util.music_scale import MusicScale
 from util.transposer import Transposer
-from weather_api.weather_forecast import Temperature
+from weather.weather_forecast import Temperature
 
 
 class Sequence:

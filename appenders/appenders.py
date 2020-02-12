@@ -2,9 +2,9 @@ from abc import ABCMeta, abstractmethod
 
 from mido import MidiFile
 
-from melody_builder import MelodyBuilder
-from sequences.sequences import Sequence, CloudsSequence, HumiditySequence, RainSequence, TemperatureSequence, WindSequence
-from tracks.tracks import Track, CloudsTrack, HumidityTrack, RainTrack, TemperatureTrack, WindTrack
+from util.melody_builder import MelodyBuilder
+from sequences.sequences import *
+from tracks.tracks import *
 
 
 class AppenderInterface:

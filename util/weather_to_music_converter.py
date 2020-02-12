@@ -1,25 +1,21 @@
 from pathlib import Path
 
-from mido import MidiFile, MidiTrack
-
-from appenders.appenders import WindAppender, CloudsAppender, HumidityAppender, RainAppender, TemperatureAppender
-from util.converters import Converter
-from melody_builder import MelodyBuilder
-from sequences.sequences import WindSequence, CloudsSequence, HumiditySequence, RainSequence, TemperatureSequence
-from util.instruments import Instruments
+from appenders.appenders import *
+from util.melody_builder import MelodyBuilder
+from sequences.sequences import *
 from util.music_scale import MusicScale
-from tracks.tracks import TemperatureTrack, CloudsTrack, HumidityTrack, RainTrack, WindTrack
-from weather_api.weather_api import WeatherApi
+from tracks.tracks import *
+from weather.weather_api import WeatherApi
 
 
 class WeatherToMusicConverter:
 
 	PHRASE_LENGTH = 1200
-	OUTPUT_FILE_DIR = 'midi_out'
+	OUTPUT_FILE_DIR = '../midi_out'
 
 	music_scales = MusicScale()
 
-	def weather_to_music(self, api_key, city):
+	def weather_to_music(self, api_key, city) -> MidiFile:
 		api_handling = WeatherApi()
 		converter = Converter()
 
@@ -72,6 +68,8 @@ class WeatherToMusicConverter:
 
 		file_name = 'weather_song_' + weather_forecast.city + '_' + weather_forecast.country + '_' + str(weather_forecast.weather_timestamps[0].timestamp)
 		self.save_file(outfile, self.OUTPUT_FILE_DIR, file_name)
+
+		return outfile
 
 	def save_file(self, outfile: MidiFile, file_dir: str, file_name: str) -> MidiFile:
 		Path(file_dir).mkdir(exist_ok=True)
