@@ -5,12 +5,16 @@ from tracks.track import Track
 
 
 class HumidityTrack(Track):
+    track: MidiTrack
+    name = 'humidity'
 
-    def __init__(self, track: MidiTrack, channel: int, instrument: Instruments):
-        super().__init__(track, channel, instrument)
+    def __init__(self, channel: int, instrument: Instruments):
+        self.track = MidiTrack()
+        self.track.name = self.name
+        super().__init__(self.track, channel, instrument)
 
     def get_track(self):
-        return super().get_track()
+        return self.track
 
     def get_channel(self):
         return super().get_channel()
