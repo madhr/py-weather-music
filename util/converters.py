@@ -15,6 +15,8 @@ class Converter:
 	EDGE_WIND_VALUE = 25
 	AMPLITUDE_ADD = 1
 	AMPLITUDE_MULTIPLY = 4
+	AVERAGE_AMPLITUDE_ADD = -100
+	AVERAGE_AMPLITUDE_MULTIPLY = 1.8
 
 	def music_notes_to_sequence_length(self, list_of_notes: list, length: int) -> list:
 		if len(list_of_notes) > length:
@@ -56,3 +58,13 @@ class Converter:
 
 	def wind_to_velocity(self, wind: float) -> int:
 		return int(wind * self.WIND_TO_VELOCITY) if wind < self.EDGE_WIND_VALUE else self.MAX_NOISE_VELOCITY
+
+	def average_temperature(self, weather_timestamps: list) -> float:
+		sum = 0
+		for timestamp in weather_timestamps:
+			sum += timestamp.temperature.feels_like
+
+		return sum / len(weather_timestamps)
+
+	def average_temperature_to_ticks_per_beat(self, average_temperature: float) -> int:
+		return int((average_temperature + self.AVERAGE_AMPLITUDE_ADD) * self.AVERAGE_AMPLITUDE_MULTIPLY)
