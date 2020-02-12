@@ -14,19 +14,22 @@ from weather_api.weather_api import WeatherApi
 
 class WeatherToMusicConverter:
 
-	TICKS_PER_BEAT = 400
 	PHRASE_LENGTH = 1200
 	OUTPUT_FILE_DIR = 'midi_out'
-	converter = Converter()
+
 	music_scales = MusicScale()
 
 	def weather_to_music(self, api_key, city):
 		api_handling = WeatherApi()
+		converter = Converter()
 
 		weather_forecast = api_handling.get_weather_forecast_from_api(city, api_key)
 
+		average_temperature = converter.average_temperature(weather_forecast.weather_timestamps)
+		ticks_per_beat = converter.average_temperature_to_ticks_per_beat(average_temperature)
+
 		outfile = MidiFile()
-		outfile.ticks_per_beat = self.TICKS_PER_BEAT
+		outfile.ticks_per_beat = ticks_per_beat
 
 		melody_builder = MelodyBuilder(outfile, self.PHRASE_LENGTH)
 
@@ -41,7 +44,7 @@ class WeatherToMusicConverter:
 
 		for entry in weather_forecast.weather_timestamps:
 
-			base_note = self.converter.temperature_to_base_note(entry.temperature.feels_like)
+			base_note = converter.temperature_to_base_note(entry.temperature.feels_like)
 			music_scale = self.music_scales.melodic_minor(base_note)
 
 			temperature_sequence = TemperatureSequence(entry.temperature, self.PHRASE_LENGTH, base_note, temperature.get_track())
