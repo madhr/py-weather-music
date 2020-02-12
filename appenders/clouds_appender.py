@@ -3,7 +3,7 @@ from mido import MidiFile
 from appenders.appender_interface import AppenderInterface
 from melody_builder import MelodyBuilder
 from sequences.clouds_sequence import CloudsSequence
-from tracks.clouds_track import CloudsTrack
+from tracks.tracks import CloudsTrack
 
 
 class CloudsAppender(AppenderInterface):

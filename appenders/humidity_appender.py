@@ -1,7 +1,7 @@
 from mido import MidiFile
 
 from appenders.appender_interface import AppenderInterface
-from tracks.humidity_track import HumidityTrack
+from tracks.tracks import HumidityTrack
 from util.arp_pattern import ArpPattern
 from util.converters import Converter
 from melody_builder import MelodyBuilder

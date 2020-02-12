@@ -4,7 +4,7 @@ from mido import MidiFile
 
 from melody_builder import MelodyBuilder
 from sequences.sequence import Sequence
-from tracks.track import Track
+from tracks.tracks import Track
 
 
 class AppenderInterface:

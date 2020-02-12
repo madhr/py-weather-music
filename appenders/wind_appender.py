@@ -3,7 +3,7 @@ from mido import MidiFile
 from appenders.appender_interface import AppenderInterface
 from melody_builder import MelodyBuilder
 from sequences.wind_sequence import WindSequence
-from tracks.wind_track import WindTrack
+from tracks.tracks import WindTrack
 
 
 class WindAppender(AppenderInterface):

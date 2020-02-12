@@ -16,11 +16,7 @@ from sequences.rain_sequence import RainSequence
 from sequences.temperature_sequence import TemperatureSequence
 from util.instruments import Instruments
 from util.music_scale import MusicScale
-from tracks.temperature_track import TemperatureTrack
-from tracks.clouds_track import CloudsTrack
-from tracks.humidity_track import HumidityTrack
-from tracks.rain_track import RainTrack
-from tracks.wind_track import WindTrack
+from tracks.tracks import TemperatureTrack, CloudsTrack, HumidityTrack, RainTrack, WindTrack
 from weather_api.weather_api import WeatherApi
 
 

@@ -3,7 +3,7 @@ from mido import MidiFile
 from appenders.appender_interface import AppenderInterface
 from melody_builder import MelodyBuilder
 from sequences.rain_sequence import RainSequence
-from tracks.rain_track import RainTrack
+from tracks.tracks import RainTrack
 
 
 class RainAppender(AppenderInterface):
