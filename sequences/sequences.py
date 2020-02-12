@@ -1,5 +1,6 @@
 from mido import MidiTrack
 
+from util.arp_pattern import ArpPattern
 from util.chords import Chords
 from util.converters import Converter
 from util.music_scale import MusicScale
@@ -64,12 +65,14 @@ class HumiditySequence(Sequence):
 	transposer = Transposer()
 	converter = Converter()
 
-	def __init__(self, humidity: int, length: int, base_note: int, track: MidiTrack, music_scale=None):
+	def __init__(self, humidity: int, length: int, base_note: int, track: MidiTrack, music_scale=None, time_factor=240, pattern=ArpPattern.UP_AND_DOWN):
 		super().__init__(length, base_note, music_scale)
 		self.__humidity = humidity
 		self.__track = track
 		self.__scale = [self.transposer.two_octaves_down(self.get_base_note())]
 		self.__velocity = self.converter.humidity_to_velocity(self.get_humidity())
+		self.__time_factor = time_factor
+		self.__pattern = pattern
 
 	def get_humidity(self):
 		return self.__humidity
@@ -86,17 +89,24 @@ class HumiditySequence(Sequence):
 	def get_velocity(self):
 		return self.__velocity
 
+	def get_time_factor(self):
+		return self.__time_factor
+
+	def get_pattern(self):
+		return self.__pattern
+
 
 class RainSequence(Sequence):
 
 	converter = Converter()
 	transposer = Transposer()
 
-	def __init__(self, rain: float, length: int, base_note: int, track: MidiTrack, music_scale: list):
+	def __init__(self, rain: float, length: int, base_note: int, track: MidiTrack, music_scale: list, time_factor=15):
 		super().__init__(length, base_note, music_scale)
 		self.__rain = rain
 		self.__track = track
 		self.__rain_scale = self.transposer.octave_up_list(self.converter.rain_to_scale_size(self.get_rain(), self.get_music_scale()))
+		self.__time_factor = time_factor
 
 	def get_rain(self):
 		return self.__rain
@@ -116,17 +126,22 @@ class RainSequence(Sequence):
 	def get_rain_scale(self):
 		return self.__rain_scale
 
+	def get_time_factor(self):
+		return self.__time_factor
+
 
 class TemperatureSequence(Sequence):
 
 	converter = Converter()
 	chords = Chords()
 
-	def __init__(self, temperature: Temperature, length: int, base_note: int, track: MidiTrack, music_scale=None):
+	def __init__(self, temperature: Temperature, length: int, base_note: int, track: MidiTrack, music_scale=None, time_factor=60, pattern=ArpPattern.UP_AND_DOWN):
 		super().__init__(length, base_note, music_scale)
 		self.__temperature = temperature
 		self.__track = track
 		self.__temperture_scale = self.converter.amplitude_to_arp_pattern((temperature.temp_max - temperature.temp_min), self.chords.minor_seventh(self.get_base_note()))
+		self.__time_factor = time_factor
+		self.__pattern = pattern
 
 	def get_temperature(self):
 		return self.__temperature
@@ -139,6 +154,12 @@ class TemperatureSequence(Sequence):
 
 	def get_temperature_scale(self):
 		return self.__temperture_scale
+
+	def get_time_factor(self):
+		return self.__time_factor
+
+	def get_pattern(self):
+		return self.__pattern
 
 
 class WindSequence(Sequence):
