@@ -12,8 +12,8 @@ class MelodyBuilder:
 		self.outfile = outfile
 		self.time_limit = time_limit
 
-	def random(self, program_value, channel, scale, track, time_factor = 60):
-		track.append(Message('program_change', channel=channel, program=program_value, time=0))
+	def random(self, channel, scale, track, time_factor = 60):
+
 		sum = 0
 		while sum < self.time_limit and not scale is None:
 			note = random.choice(scale)
@@ -34,8 +34,8 @@ class MelodyBuilder:
 
 		return self.outfile
 
-	def arpeggiator(self, program_value, channel, pattern, track, time_factor, scale, velocity = 60):
-		track.append(Message('program_change', channel=channel, program=program_value, time=0))
+	def arpeggiator(self, channel, pattern, track, time_factor, scale, velocity = 60):
+
 		arpeggiator = Arpeggiator()
 		arp_up_and_down = arpeggiator.create(pattern, scale)
 		count = 0
@@ -51,8 +51,7 @@ class MelodyBuilder:
 			track.append(Message('note_off', note=note, channel=channel, velocity=velocity, time=time_factor))
 		return self.outfile
 
-	def chord(self, program_value, channel, chord, track, time_factor = 60):
-		track.append(Message('program_change', channel=channel, program=program_value, time=0))
+	def chord(self, channel, chord, track, time_factor = 60):
 
 		sum_of_times = 0
 
@@ -71,10 +70,13 @@ class MelodyBuilder:
 
 		return self.outfile
 
-	def dynamic(self, program_value, channel, note, track, velocity):
-		track.append(Message('program_change', channel=channel, program=program_value, time=0))
+	def dynamic(self, channel, note, track, velocity):
 
 		track.append(Message('note_on', note=note, channel=channel, velocity=velocity, time=self.time_limit))
 		track.append(Message('note_off', note=note, channel=channel, velocity=velocity, time=self.time_limit))
 
 		return self.outfile
+
+	def set_instrument(self, track, channel, program_value):
+		track.append(Message('program_change', channel=channel, program=program_value, time=0))
+		return track
