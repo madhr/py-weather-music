@@ -14,9 +14,16 @@ from sequences.clouds_sequence import CloudsSequence
 from sequences.humidity_sequence import HumiditySequence
 from sequences.rain_sequence import RainSequence
 from sequences.temperature_sequence import TemperatureSequence
+from util.instruments import Instruments
 from util.transposer import Transposer
 from util.chords import Chords
 from util.music_scale import MusicScale
+from tracks.temperature_track import TemperatureTrack
+from tracks.track import Track
+from tracks.clouds_track import CloudsTrack
+from tracks.humidity_track import HumidityTrack
+from tracks.rain_track import RainTrack
+from tracks.wind_track import WindTrack
 from weather_api.weather_api import WeatherApi
 
 
@@ -51,6 +58,15 @@ class WeatherToMusicConverter:
 
 		melody_builder = MelodyBuilder(outfile, self.PHRASE_LENGTH)
 
+		temperature = TemperatureTrack(temperature_track, 1, Instruments.BrightAcousticPiano)
+		rain = RainTrack(rain_track, 2, Instruments.Celesta)
+		clouds = CloudsTrack(clouds_track, 3, Instruments.TremoloStrings)
+		humidity = HumidityTrack(humidity_track, 4, Instruments.ElectricGuitar_clean)
+		wind = WindTrack(wind_track, 5, Instruments.Seashore)
+
+		for track in [temperature, rain, clouds, humidity, wind]:
+			melody_builder.set_instrument(track.get_track(), track.get_channel(), track.get_instrument())
+
 		for entry in weather_forecast.weather_timestamps:
 
 			base_note = self.converter.temperature_to_base_note(entry.temperature.feels_like)
@@ -58,23 +74,23 @@ class WeatherToMusicConverter:
 
 			temperature_sequence = TemperatureSequence(entry.temperature, self.PHRASE_LENGTH, base_note, temperature_track)
 			temperature_appender = TemperatureAppender()
-			temperature_appender.append(melody_builder, temperature_sequence)
+			temperature_appender.append(melody_builder, temperature_sequence, temperature)
 
 			rain_sequence = RainSequence(entry.weather.rain, self.PHRASE_LENGTH, base_note, rain_track, music_scale)
 			rain_appender = RainAppender()
-			rain_appender.append(melody_builder, rain_sequence)
+			rain_appender.append(melody_builder, rain_sequence, rain)
 
 			clouds_sequence = CloudsSequence(entry.weather.clouds, self.PHRASE_LENGTH, base_note, clouds_track)
 			clouds_appender = CloudsAppender()
-			clouds_appender.append(melody_builder, clouds_sequence)
+			clouds_appender.append(melody_builder, clouds_sequence, clouds)
 
 			humidity_sequence = HumiditySequence(entry.weather.humidity, self.PHRASE_LENGTH, base_note, humidity_track)
 			humidity_appender = HumidityAppender()
-			humidity_appender.append(melody_builder, humidity_sequence)
+			humidity_appender.append(melody_builder, humidity_sequence, humidity)
 
 			wind_sequence = WindSequence(entry.weather.wind_speed, self.PHRASE_LENGTH, base_note, wind_track)
 			wind_appender = WindAppender()
-			wind_appender.append(melody_builder, wind_sequence)
+			wind_appender.append(melody_builder, wind_sequence, wind)
 
 		for track in [temperature_track, rain_track, clouds_track, humidity_track, wind_track]:
 			outfile.tracks.append(track)
