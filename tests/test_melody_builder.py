@@ -2,10 +2,10 @@ from unittest import TestCase
 
 from mido import MidiFile, MidiTrack
 
-from app.util.arp_pattern import ArpPattern
-from app.util.chords import Chords
-from app.util.instruments import Instruments
-from app.util.melody_builder import MelodyBuilder
+from build_midi.melody_builder import MelodyBuilder
+from music_rules.arp_pattern import ArpPattern
+from music_rules.chords import Chords
+from music_rules.instruments import Instruments
 
 
 class TestMelodyBuilder(TestCase):

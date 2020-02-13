@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from app.util.converters import Converter
-from app.weather.weather_forecast import *
+from build_midi.converters import Converter
+from weather.weather_forecast import *
 
 
 class TestConverter(TestCase):
@@ -63,4 +63,4 @@ class TestConverter(TestCase):
     def test_average_temperature_to_ticks_per_beat(self):
         average_temperature = 277.4
         ticks_per_beat = self.converter.average_temperature_to_ticks_per_beat(average_temperature)
-        self.assertEqual(ticks_per_beat, 319)
+        self.assertEqual(ticks_per_beat, 390)

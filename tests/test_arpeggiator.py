@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from app.util.arp_pattern import ArpPattern
-from app.util.arpeggiator import Arpeggiator
+from music_rules.arp_pattern import ArpPattern
+from music_rules.arpeggiator import Arpeggiator
 
 
 class TestArpeggiator(TestCase):

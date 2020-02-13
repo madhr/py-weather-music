@@ -2,9 +2,9 @@ from abc import ABCMeta, abstractmethod
 
 from mido import MidiFile
 
-from app.tracks.tracks import *
-from app.sequences.sequences import *
-from app.util.melody_builder import MelodyBuilder
+from build_midi.melody_builder import MelodyBuilder
+from build_midi.sequences import *
+from build_midi.tracks import *
 
 
 class AppenderInterface:

@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from app.util.transposer import Transposer
+from music_rules.transposer import Transposer
 
 
 class TestTransposer(TestCase):

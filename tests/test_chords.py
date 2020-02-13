@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from app.util.chords import Chords
+from music_rules.chords import Chords
 
 
 class TestChords(TestCase):

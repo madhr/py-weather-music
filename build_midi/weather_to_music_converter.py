@@ -1,9 +1,13 @@
 from pathlib import Path
-from app.appenders.appenders import *
-from app.sequences.sequences import *
-from app.util.instruments import Instruments
-from app.util.music_scale import MusicScale
-from app.weather.weather_api import WeatherApi
+
+from build_midi.appenders import *
+from build_midi.converters import Converter
+from build_midi.melody_builder import MelodyBuilder
+from build_midi.sequences import *
+from build_midi.tracks import *
+from music_rules.instruments import Instruments
+from music_rules.music_scale import MusicScale
+from weather.weather_api import WeatherApi
 
 
 class WeatherToMusicConverter:

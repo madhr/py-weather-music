@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from app.util.music_scale import MusicScale
+from music_rules.music_scale import MusicScale
 
 
 class TestMusicScale(TestCase):
