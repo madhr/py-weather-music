@@ -130,3 +130,7 @@ dmypy.json
 
 # PyCharm
 .idea
+
+#midi
+/midi_out
+/tests/midi_out
