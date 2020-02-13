@@ -16,7 +16,7 @@ class Converter:
 	AMPLITUDE_ADD = 1
 	AMPLITUDE_MULTIPLY = 4
 	AVERAGE_AMPLITUDE_ADD = -100
-	AVERAGE_AMPLITUDE_MULTIPLY = 1.8
+	AVERAGE_AMPLITUDE_MULTIPLY = 2.2
 
 	def music_notes_to_sequence_length(self, list_of_notes: list, length: int) -> list:
 		if len(list_of_notes) > length:
